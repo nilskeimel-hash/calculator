@@ -1,0 +1,15 @@
+# Python-Cache (Kompilierte Dateien)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entwicklungsumgebungen (VS Code, PyCharm etc.)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Betriebssystem-Dateien
+.DS_Store
+Thumbs.db
