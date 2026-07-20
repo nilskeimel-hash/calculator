@@ -1,121 +1,62 @@
 import calculator
 
-list_of_operations = [
-    "+",
-    "-",
-    "*",
-    "/",
-    "^",
-    "sqrt",
-    "!",
-    "sin",
-    "cos",
-    "tan",
-    "asin",
-    "acos",
-    "atan",
-    "circumference",
-    "area_circle",
-    "area_rectangle",
-]
+TWO_NUMBER_OPS = {
+    "+": calculator.plus,
+    "-": calculator.minus,
+    "*": calculator.multiply,
+    "/": calculator.divide,
+    "^": calculator.power,
+    "asin": calculator.asin,
+    "acos": calculator.acos,
+    "atan": calculator.atan,
+    "area_rectangle": calculator.area_rectangle,
+}
+
+ONE_NUMBER_OPS = {
+    "sqrt": calculator.square_root,
+    "sin": calculator.sin,
+    "cos": calculator.cos,
+    "tan": calculator.tan,
+    "circumference": calculator.circumference,
+    "area_circle": calculator.area_circle,
+}
+
+INTEGER_OPS = {"!": calculator.factorial}
+
 
 while True:
     print("Welcome to the calculator!")
-    print(f"Available operations: {', '.join(list_of_operations)}")
+    print(
+        f"Available operations: {', '.join(list(TWO_NUMBER_OPS.keys()) + list(ONE_NUMBER_OPS.keys()) + list(INTEGER_OPS.keys()))}"
+    )
     operation = input("Enter an operation (or 'exit' to quit): ")
-    if operation == "exit":
-        print("Until the next time!")
+    if operation.lower() == "exit":
+        print("Exiting the calculator. Goodbye!")
         break
-    elif operation in ["+", "-", "*", "/", "^"]:
-        a = float(input("Enter the first number: "))
-        b = float(input("Enter the second number: "))
-        if operation == "+":
-            result = calculator.plus(a, b)
-        elif operation == "-":
-            result = calculator.minus(a, b)
-        elif operation == "*":
-            result = calculator.multiply(a, b)
-        elif operation == "/":
-            try:
-                result = calculator.divide(a, b)
-            except ValueError as e:
-                print(e)
-                continue
-        elif operation == "^":
-            result = calculator.power(a, b)
-        print(f"The result is: {result}")
-    elif operation == "sqrt":
-        a = float(input("Enter the number: "))
+    elif operation in TWO_NUMBER_OPS:
         try:
-            result = calculator.square_root(a)
-            print(f"The square root of {a} is: {result}")
+            a = float(input("Enter the first number: "))
+            b = float(input("Enter the second number: "))
+            result = TWO_NUMBER_OPS[operation](a, b)
+            print(f"The result is: {result}")
         except ValueError as e:
             print(e)
             continue
-    elif operation == "!":
-        n = int(input("Enter a non-negative integer: "))
+    elif operation in ONE_NUMBER_OPS:
         try:
-            result = calculator.factorial(n)
-            print(f"The factorial of {n} is: {result}")
+            a = float(input("Enter a number: "))
+            result = ONE_NUMBER_OPS[operation](a)
+            print(f"The result is: {result}")
         except ValueError as e:
             print(e)
             continue
-    elif operation == "sin":
-        a = float(input("Enter the angle in degrees: "))
-        result = calculator.sin(a)
-        print(f"The sine of {a} degrees is: {result}")
-    elif operation == "cos":
-        a = float(input("Enter the angle in degrees: "))
-        result = calculator.cos(a)
-        print(f"The cosine of {a} degrees is: {result}")
-    elif operation == "tan":
-        a = float(input("Enter the angle in degrees: "))
-        result = calculator.tan(a)
-        print(f"The tangent of {a} degrees is: {result}")
-    elif operation == "asin":
-        a = float(input("Enter the value for Gegenkathete: "))
-        b = float(input("Enter the hypotenuse: "))
+    elif operation in INTEGER_OPS:
         try:
-            result = calculator.asin(a, b)
-            print(f"The arcsine of {a}/{b} is: {result}")
+            n = int(input("Enter an integer: "))
+            result = INTEGER_OPS[operation](n)
+            print(f"The result is: {result}")
         except ValueError as e:
             print(e)
-    elif operation == "acos":
-        a = float(input("Enter the value for Ankathete: "))
-        b = float(input("Enter the hypotenuse: "))
-        result = calculator.acos(a, b)
-        print(f"The arccosine of {a}/{b} is: {result}")
-    elif operation == "atan":
-        a = float(input("Enter the value for Gegenkathete: "))
-        b = float(input("Enter the Ankathete: "))
-        try:
-            result = calculator.atan(a, b)
-            print(f"The arctangent of {a}/{b} is: {result}")
-        except ValueError as e:
-            print(e)
-    elif operation == "circumference":
-        radius = float(input("Enter the radius of the circle: "))
-        try:
-            result = calculator.circumference(radius)
-            print(f"The circumference of the circle with radius {radius} is: {result}")
-        except ValueError as e:
-            print(e)
-    elif operation == "area_circle":
-        radius = float(input("Enter the radius of the circle: "))
-        try:
-            result = calculator.area_circle(radius)
-            print(f"The area of the circle with radius {radius} is: {result}")
-        except ValueError as e:
-            print(e)
-    elif operation == "area_rectangle":
-        length = float(input("Enter the length of the rectangle: "))
-        width = float(input("Enter the width of the rectangle: "))
-        try:
-            result = calculator.area_rectangle(length, width)
-            print(
-                f"The area of the rectangle with length {length} and width {width} is: {result}"
-            )
-        except ValueError as e:
-            print(e)
+            continue
     else:
         print("Invalid operation. Please try again.")
