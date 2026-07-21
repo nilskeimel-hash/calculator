@@ -13,3 +13,7 @@ __pycache__/
 # Betriebssystem-Dateien
 .DS_Store
 Thumbs.db
+
+#history
+history.txt
+__pycache__/
