@@ -57,8 +57,10 @@ while True:
             result = TWO_NUMBER_OPS[operation](a, b)
             log_history(f"{a} {operation} {b} = {result}")
             print(f"The result is: {result}")
-        except ValueError as e:
-            print(e)
+        except calculator.CalculationError as e:
+            print(f"Math error: {e}")
+        except ValueError:
+            print("Please enter a valid number.")
             continue
     elif operation in ONE_NUMBER_OPS:
         try:
@@ -66,8 +68,10 @@ while True:
             result = ONE_NUMBER_OPS[operation](a)
             log_history(f"{operation} of {a} = {result}")
             print(f"The result is: {result}")
-        except ValueError as e:
-            print(e)
+        except calculator.CalculationError as e:
+            print(f"Math error: {e}")
+        except ValueError:
+            print("Please enter a valid number.")
             continue
     elif operation in INTEGER_OPS:
         try:
@@ -75,8 +79,10 @@ while True:
             result = INTEGER_OPS[operation](n)
             log_history(f"{n}{operation} = {result}")
             print(f"The result is: {result}")
-        except ValueError as e:
-            print(e)
+        except calculator.CalculationError as e:
+            print(f"Math error: {e}")
+        except ValueError:
+            print("Please enter a valid integer.")
             continue
     elif operation in COMMAND_OPS:
         lines = COMMAND_OPS[operation]()
@@ -86,6 +92,6 @@ while True:
                 print(line)
         else:
             print("No history found.")
-            
+
     else:
         print("Invalid operation. Please try again.")
